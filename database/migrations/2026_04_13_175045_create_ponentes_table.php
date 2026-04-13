@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('ponentes', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->string('apellido');
+            $table->string('email')->unique();
+            $table->string('especialidad');
+
+            $table->foreignId('evento_id')
+                ->constrained('eventos')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

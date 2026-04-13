@@ -1,59 +1,305 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Documentacion de API (Postman)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Esta API expone recursos para:
+- eventos
+- ponentes
+- asistentes
 
-## About Laravel
+Las rutas estan definidas en [routes/api.php](routes/api.php).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Base URL
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Usa esta base en local:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```text
+http://127.0.0.1:8000/api
+```
 
-## Learning Laravel
+Si aun no esta levantado el proyecto:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```bash
+php artisan serve
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Headers recomendados en Postman
 
-## Laravel Sponsors
+```text
+Accept: application/json
+Content-Type: application/json
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 1) Rutas de Eventos
 
-### Premium Partners
+### Listar eventos
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- Metodo: GET
+- URL: /eventos
 
-## Contributing
+Ejemplo completo:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```http
+GET http://127.0.0.1:8000/api/eventos
+```
 
-## Code of Conduct
+### Crear evento
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Metodo: POST
+- URL: /eventos
 
-## Security Vulnerabilities
+Body JSON:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```json
+{
+	"titulo": "Foro de Tecnologia Publica",
+	"descripcion": "Encuentro de innovacion para sector publico",
+	"fecha_inicio": "2026-05-20",
+	"fecha_fin": "2026-05-21",
+	"ubicacion": "Ciudad de Mexico"
+}
+```
 
-## License
+Ejemplo completo:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```http
+POST http://127.0.0.1:8000/api/eventos
+```
+
+### Ver evento por ID
+
+- Metodo: GET
+- URL: /eventos/{id}
+
+Ejemplo completo:
+
+```http
+GET http://127.0.0.1:8000/api/eventos/1
+```
+
+### Actualizar evento
+
+- Metodo: PUT (o PATCH)
+- URL: /eventos/{id}
+
+Body JSON:
+
+```json
+{
+	"titulo": "Foro de Tecnologia Publica 2026",
+	"descripcion": "Evento actualizado",
+	"fecha_inicio": "2026-05-20",
+	"fecha_fin": "2026-05-22",
+	"ubicacion": "Guadalajara"
+}
+```
+
+Ejemplo completo:
+
+```http
+PUT http://127.0.0.1:8000/api/eventos/1
+```
+
+### Eliminar evento
+
+- Metodo: DELETE
+- URL: /eventos/{id}
+
+Ejemplo completo:
+
+```http
+DELETE http://127.0.0.1:8000/api/eventos/1
+```
+
+## 2) Rutas de Ponentes
+
+### Listar ponentes
+
+- Metodo: GET
+- URL: /ponentes
+
+```http
+GET http://127.0.0.1:8000/api/ponentes
+```
+
+### Crear ponente
+
+- Metodo: POST
+- URL: /ponentes
+
+Body JSON:
+
+```json
+{
+	"nombre": "Ana",
+	"apellido": "Torres",
+	"email": "ana.torres@example.com",
+	"especialidad": "Transformacion digital",
+	"evento_id": 2
+}
+```
+
+```http
+POST http://127.0.0.1:8000/api/ponentes
+```
+
+### Ver ponente por ID
+
+- Metodo: GET
+- URL: /ponentes/{id}
+
+```http
+GET http://127.0.0.1:8000/api/ponentes/1
+```
+
+### Actualizar ponente
+
+- Metodo: PUT (o PATCH)
+- URL: /ponentes/{id}
+
+Body JSON:
+
+```json
+{
+	"nombre": "Ana",
+	"apellido": "Torres",
+	"email": "ana.torres.actualizado@example.com",
+	"especialidad": "Gobierno digital",
+	"evento_id": 3
+}
+```
+
+```http
+PUT http://127.0.0.1:8000/api/ponentes/1
+```
+
+### Eliminar ponente
+
+- Metodo: DELETE
+- URL: /ponentes/{id}
+
+```http
+DELETE http://127.0.0.1:8000/api/ponentes/1
+```
+
+## 3) Rutas de Asistentes
+
+### Listar asistentes
+
+- Metodo: GET
+- URL: /asistentes
+
+```http
+GET http://127.0.0.1:8000/api/asistentes
+```
+
+### Crear asistente
+
+- Metodo: POST
+- URL: /asistentes
+
+Body JSON:
+
+```json
+{
+	"nombre": "Luis",
+	"apellido": "Garcia",
+	"email": "luis.garcia@example.com",
+	"telefono": "5512345678",
+	"evento_id": 2
+}
+```
+
+```http
+POST http://127.0.0.1:8000/api/asistentes
+```
+
+### Ver asistente por ID
+
+- Metodo: GET
+- URL: /asistentes/{id}
+
+```http
+GET http://127.0.0.1:8000/api/asistentes/1
+```
+
+### Actualizar asistente
+
+- Metodo: PUT (o PATCH)
+- URL: /asistentes/{id}
+
+Body JSON:
+
+```json
+{
+	"nombre": "Luis",
+	"apellido": "Garcia",
+	"email": "luis.garcia.actualizado@example.com",
+	"telefono": "5598765432",
+	"evento_id": 4
+}
+```
+
+```http
+PUT http://127.0.0.1:8000/api/asistentes/1
+```
+
+### Eliminar asistente
+
+- Metodo: DELETE
+- URL: /asistentes/{id}
+
+```http
+DELETE http://127.0.0.1:8000/api/asistentes/1
+```
+
+## 4) Ruta protegida de usuario autenticado
+
+### Obtener usuario autenticado
+
+- Metodo: GET
+- URL: /user
+- Requiere autenticacion (`auth:api`)
+
+```http
+GET http://127.0.0.1:8000/api/user
+Authorization: Bearer TU_TOKEN
+```
+
+## Respuestas esperadas
+
+Estados comunes en esta API:
+- 200: consulta, actualizacion o eliminacion correcta
+- 201: creacion correcta
+- 404: recurso no encontrado
+- 422: error de validacion
+- 500: error interno del servidor
+
+Ejemplo de respuesta exitosa:
+
+```json
+{
+	"message": "Evento creado correctamente.",
+	"data": {
+		"id": 11,
+		"titulo": "Foro de Tecnologia Publica",
+		"descripcion": "Encuentro de innovacion para sector publico",
+		"fecha_inicio": "2026-05-20",
+		"fecha_fin": "2026-05-21",
+		"ubicacion": "Ciudad de Mexico",
+		"created_at": "2026-04-13T20:00:00.000000Z",
+		"updated_at": "2026-04-13T20:00:00.000000Z"
+	}
+}
+```
+
+Ejemplo de error de validacion:
+
+```json
+{
+	"message": "Datos de entrada invalidos.",
+	"errors": {
+		"email": [
+			"The email has already been taken."
+		]
+	}
+}
+```
